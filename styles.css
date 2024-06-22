@@ -15,14 +15,14 @@ body {
 
 }
 
-.archivo-<uniquifier> {
+/* .archivo-<uniquifier> {
   font-family: "Archivo", sans-serif;
   font-optical-sizing: auto;
   font-weight: <weight>;
   font-style: normal;
   font-variation-settings:
     "wdth" 100;
-}
+} */
 
 
 .subtle {
@@ -61,7 +61,7 @@ header p {
 }
 
 section {
-    margin: 2rem auto;
+    /* margin: 2rem auto; */
     padding: 1rem;
     max-width: 800px;
 }
@@ -91,10 +91,10 @@ a {
     display: inline-block;
     width: 100%;
 }
-a:hover {
+/* a:hover {
     color: #ccc;
     text-decoration: underline;
-}
+} */
 
 .desc {
     color: #888;
@@ -116,6 +116,11 @@ a:hover {
     /* transition: opacity 0.3s ease-in-out; */
 }
 
-.prjbtn:hover {
+/* .prjbtn:hover {
     background-color: #ffffff11;
+} */
+
+.pactive {
+    background-color: #ffffff11;    
+    color: red;
 }
