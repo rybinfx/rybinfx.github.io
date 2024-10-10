@@ -43,12 +43,19 @@
       val2: 0,
     }
     params.seed = Math.random();
-    lighthouse_generate(lighthouse_canvas, params);
 
     // Variables to store the previous position
-    let isDragging = false;
     let prevX = 0;
     let prevY = 0;
+    let isDragging = false;
+    let velY = 0;
+    const callback = function(frame) {
+      velY *= 0.98;
+      params.val2 += velY;
+      console.log(velY);
+    }
+    lighthouse_generate(lighthouse_canvas, params, callback);
+
 
     function getPointerPosition(event) {
       let x, y;
@@ -91,28 +98,20 @@
       const currentX = pos.x;
       const currentY = pos.y;
 
-      // Calculate dx and dy
       let dx = currentX - prevX;
       let dy = currentY - prevY;
 
-      // Update prevX and prevY
       prevX = currentX;
       prevY = currentY;
 
-
       dx = dx / lighthouse_canvas.width;
       dy = dy / lighthouse_canvas.height;
-      // Expose dx and dy here
-      console.log('dx:', dx, 'dy:', dy);
 
-      // params.seed += dx;
+      velY = dy;
+
       params.val1 += dx;
-      params.val2 += -dy;
-      console.log('seed:', params.seed, 'val1:', params.val1, 'val2:', params.val2);
+      // params.val2 += -dy;
 
-      // Call your custom function with dx and dy
-      // For example:
-      // updateParameter(dx, dy);
     }
 
     function handleEnd(event) {

@@ -207,7 +207,7 @@ const lighthouse_generate = async (canvas, params, callback) => {
           });
           twgl.drawBufferInfo(gl, bufferInfo2, gl.POINTS);
 
-          // callback(frame);
+          callback(frame);
           
           // Update time
           time0 = time;
