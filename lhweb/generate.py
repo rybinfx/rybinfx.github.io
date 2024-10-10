@@ -1,6 +1,6 @@
 from celestial.generate import generate
 
-result = generate(uniforms=['off', 'seed', 'val1', 'val2'], kwargs=[])
+result = generate(uniforms=['off', 'seed', 'val1', 'val2', 'resx', 'resy'], kwargs=[])
 
 primitives = result['primitives']
 npoints = result['points']

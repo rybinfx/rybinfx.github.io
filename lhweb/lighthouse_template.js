@@ -177,6 +177,8 @@ const lighthouse_generate = async (canvas, params, callback) => {
             u_seed: params.seed,
             u_off: frame/60,
             u_offset: 0.1,
+            u_resx: res[0],
+            u_resy: res[1],
             u_val1: params.val1,
             u_val2: params.val2,
             u_tex0: inTex,
@@ -201,7 +203,7 @@ const lighthouse_generate = async (canvas, params, callback) => {
           twgl.setBuffersAndAttributes(gl, programInfo2, bufferInfo2);
           twgl.setUniforms(programInfo2, {
             tex_size: [fbo.width, fbo.height],
-            point_size: res[0]/1024*2,
+            point_size: res[1]/1024*2,
             pos_tex: fbo.attachments[0],
             color_tex: fbo.attachments[1]
           });

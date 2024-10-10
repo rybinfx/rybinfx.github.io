@@ -127,6 +127,23 @@ def generate(uniforms, kwargs):
 	class Main(Block):
 		def graph(self, ctx, me):
 
+			# Desired aspect ratio
+			target_ratio = 9.0 / 16.0
+
+			# Get the current ratio of the screen or window
+			ratio = U.resx / U.resy
+
+			# Calculate the scaling factor based on the target aspect ratio
+			if ratio > target_ratio:
+				sratio_x = target_ratio / ratio
+				sratio_y = 1.0
+			else:
+				sratio_x = 1.0
+				sratio_y = ratio / target_ratio
+
+			# Apply the scaling with the locked aspect ratio
+			me.scale(x=sratio_x, y=sratio_y)
+
 
 			with ctx.Clone() as group:
 				# Channels
@@ -356,6 +373,7 @@ def generate(uniforms, kwargs):
 							# me.val *= bounds
 
 							me.weight *= 0.5
+							me.weight *= 0.66
 
 
 
