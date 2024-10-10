@@ -1,0 +1,116 @@
+
+<!DOCTYPE html>
+<html lang=”en”>
+<head>    
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lighthouse Web Genertor</title>
+
+  <style>
+    #recordButton {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: rgb(51, 164, 41);
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    #recordButton.recording {
+      background-color: rgb(215, 30, 13);
+    }
+  </style>
+
+</head>
+<body>
+  <div>
+    <canvas id="lighthouse_canvas" width="512" height="512"></canvas>
+  </div>
+  <button id="recordButton">Record</button>
+
+
+
+  <script src="twgl.min.js"></script>
+  <script src="lighthouse_generate.js"></script>
+
+  <script>
+    let isRecording = false;
+    let mediaRecorder;
+    let audioChunks = [];
+    let recordedAudio;
+    let mediaStream;
+  
+    const recordButton = document.getElementById('recordButton');
+  
+    recordButton.addEventListener('click', async () => {
+      if (!isRecording) {
+        startRecording();
+      } else {
+        stopRecording();
+      }
+    });
+  
+    async function startRecording() {
+      isRecording = true;
+      recordButton.classList.add('recording');
+      recordButton.innerText = 'Stop';
+  
+      mediaStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      mediaRecorder = new MediaRecorder(mediaStream);
+      mediaRecorder.start();
+  
+      mediaRecorder.ondataavailable = event => {
+        audioChunks.push(event.data);
+      };
+  
+      mediaRecorder.onstop = async () => {
+        const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+        recordedAudio = URL.createObjectURL(audioBlob);
+
+        ///////////////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////////
+        // GENERATE
+        // lighthouse_canvas: webgl2 canvas for rendering
+        // recordedAudio: audioBlob with recorded audio
+        // callback(frame): callback function to execute at the end of every render frame (etc. to add to video encoder)
+        
+        const lighthouse_canvas = document.getElementById("lighthouse_canvas");
+        const callback = (frame) => {
+          console.log('Frame', frame);
+          if (frame == 60) {
+            console.log('Example: finish encoding and download')
+          }
+        }
+        lighthouse_generate(lighthouse_canvas, recordedAudio, callback);
+        ///////////////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////////
+
+      };
+    }
+  
+    function stopRecording() {
+      isRecording = false;
+      recordButton.classList.remove('recording');
+      recordButton.innerText = 'Record';
+      mediaRecorder.stop();
+      audioChunks = [];
+  
+      // Stop all media tracks to release the microphone
+      mediaStream.getTracks().forEach(track => track.stop());
+    }
+
+
+
+
+
+
+  </script>
+
+  <!-- Generate -->
+
+  <!-- <script>
+    const lighthouse_canvas = document.getElementById("lighthouse_canvas");
+    lighthouse_generate(lighthouse_canvas);
+  </script> -->
+
+</body>
+</html>
