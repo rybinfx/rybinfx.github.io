@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>    
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>THK Sync</title>
+  <style>
+    html, body, div, canvas {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+    canvas {
+      display: block;
+    }
+    .go {
+      background-color: transparent;
+      background-color: transparent;
+      border-radius: 16px;
+      border: 1.5px solid white;
+      color: white;
+      
+      position: absolute;
+      bottom: 20px; left: 50%;
+      transform: translateX(-50%);
+      padding: 10px 20px;
+      font-size: 16px;
+      z-index: 10;
+    }
+    
+    .go:active {
+      background-color: white;
+      color: black;
+    }
+
+    
+  </style>
+</head>
+<body>
+  <div>
+    <canvas id="lighthouse_canvas"></canvas>
+    <button id="goButton" class="go">
+      GO
+    </button>
+  </div>
+
+  <script src="twgl.min.js"></script>
+  <script src="thk.js"></script>
+
+
+  <script>
+    const lighthouse_canvas = document.getElementById("lighthouse_canvas");
+
+    function resizeCanvas() {
+      lighthouse_canvas.width = window.innerWidth;
+      lighthouse_canvas.height = window.innerHeight;
+    }
+
+    window.addEventListener('resize', resizeCanvas, false);
+    resizeCanvas();
+
+    // Initialize your canvas content after resizing
+    const params = {
+      seed: 0,
+      val1: 0,
+      val2: 0,
+    }
+    // params.seed = Math.random();
+
+    const goButton = document.getElementById("goButton");
+    goButton.addEventListener("click", function () {
+      console.log('send', params);
+
+
+      const jsonData = params;
+
+      fetch('https://thk-tower.glitch.me/send-json', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(jsonData),
+      })
+      .then(response => response.json())
+      .then(data => console.log('Success:', data))
+      .catch((error) => {
+          console.error('Error:', error);
+      });
+
+
+    });
+
+    // Variables to store the previous position
+    let prevX = 0;
+    let prevY = 0;
+    let isDragging = false;
+    let velY = 0;
+    const callback = function(frame) {
+      velY *= 0.98;
+      params.val2 += velY;
+      // console.log(velY);
+    }
+    lighthouse_generate(lighthouse_canvas, params, callback);
+
+
+    function getPointerPosition(event) {
+      let x, y;
+
+      if (event.type.startsWith('touch')) {
+        // Touch event
+        const touch = event.touches[0] || event.changedTouches[0];
+        x = touch.clientX;
+        y = touch.clientY;
+      } else {
+        // Mouse event
+        x = event.clientX;
+        y = event.clientY;
+      }
+
+      // Adjust for canvas position
+      const rect = lighthouse_canvas.getBoundingClientRect();
+      x -= rect.left;
+      y -= rect.top;
+
+      return { x, y };
+    }
+
+    function handleStart(event) {
+      event.preventDefault();
+      isDragging = true;
+
+      const pos = getPointerPosition(event);
+      prevX = pos.x;
+      prevY = pos.y;
+
+      // params.seed = Math.random();
+    }
+
+    function handleMove(event) {
+      if (!isDragging) return;
+      event.preventDefault();
+
+      const pos = getPointerPosition(event);
+      const currentX = pos.x;
+      const currentY = pos.y;
+
+      let dx = currentX - prevX;
+      let dy = currentY - prevY;
+
+      prevX = currentX;
+      prevY = currentY;
+
+      dx = dx / lighthouse_canvas.width;
+      dy = dy / lighthouse_canvas.height;
+
+      velY = -dy;
+
+      params.val1 += dx;
+      // params.val2 += -dy;
+
+    }
+
+    function handleEnd(event) {
+      if (!isDragging) return;
+      event.preventDefault();
+      isDragging = false;
+    }
+
+    // Add event listeners for mouse and touch events
+    lighthouse_canvas.addEventListener('mousedown', handleStart, false);
+    lighthouse_canvas.addEventListener('mousemove', handleMove, false);
+    lighthouse_canvas.addEventListener('mouseup', handleEnd, false);
+    lighthouse_canvas.addEventListener('mouseleave', handleEnd, false);
+
+    lighthouse_canvas.addEventListener('touchstart', handleStart, false);
+    lighthouse_canvas.addEventListener('touchmove', handleMove, false);
+    lighthouse_canvas.addEventListener('touchend', handleEnd, false);
+    lighthouse_canvas.addEventListener('touchcancel', handleEnd, false);
+  </script>
+
+
+
+</body>
+</html>
