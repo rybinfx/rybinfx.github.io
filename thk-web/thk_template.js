@@ -91,7 +91,6 @@ const lighthouse_generate = async (canvas, params, callback) => {
       intex.push(1);
     }
 
-
     // Input texture
     let inTexInfo = {
       mag: gl.LINEAR,
@@ -104,6 +103,7 @@ const lighthouse_generate = async (canvas, params, callback) => {
       height: 1,
       src: intex,
     };
+    
     const inTex = twgl.createTexture(gl, inTexInfo);
     twgl.setTextureFromArray(gl, inTex, intex, inTexInfo);
     // 'Generate' program

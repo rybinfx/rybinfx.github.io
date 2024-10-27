@@ -11,22 +11,22 @@
       width: 100%;
       height: 100%;
       overflow: hidden;
+      font-family: Arial, Helvetica, sans-serif;
     }
     canvas {
       display: block;
     }
     .go {
-      background-color: transparent;
-      background-color: transparent;
-      border-radius: 16px;
-      border: 1.5px solid white;
-      color: white;
+      background-color: #ffffff19;
+      border-radius: 64px;
+      border: 1.0px solid rgba(255, 255, 255, 0.2);
+      color: rgba(255, 255, 255, 0.747);
       
       position: absolute;
-      bottom: 20px; left: 50%;
+      bottom: 5%; left: 50%;
       transform: translateX(-50%);
-      padding: 10px 20px;
-      font-size: 16px;
+      padding: 16px 26px;
+      font-size: 20px;
       z-index: 10;
     }
     
@@ -34,12 +34,26 @@
       background-color: white;
       color: black;
     }
+    /* Centered div styling */
+    #centeredText {
+      color: rgba(255, 255, 255, 1.0);
+      position: absolute;
+      bottom: 55%; left: 50%;
+      transform: translateX(-50%) translateY(50%);
+      padding: 16px 26px;
+      font-size: 28px;
+      z-index: 10;
+      text-align: center;
+      transition: opacity 1s;
+      opacity: 0.0;
+      pointer-events: none;
+    }
 
-    
   </style>
 </head>
 <body>
   <div>
+    <span id="centeredText">Entity sent to THK tower</span>
     <canvas id="lighthouse_canvas"></canvas>
     <button id="goButton" class="go">
       GO
@@ -51,6 +65,16 @@
 
 
   <script>
+    function showText() {
+        const centeredText = document.getElementById("centeredText");
+        centeredText.style.opacity = 1.0; // Show the text
+
+        setTimeout(() => {
+          centeredText.style.opacity = 0.0; // Hide the text after 3 seconds
+        }, 3000); // 3000ms = 3 seconds
+    }
+
+
     const lighthouse_canvas = document.getElementById("lighthouse_canvas");
 
     function resizeCanvas() {
@@ -64,15 +88,15 @@
     // Initialize your canvas content after resizing
     const params = {
       seed: 0,
-      val1: 0,
-      val2: 0,
+      val1: Math.random()*100.0,
+      val2: Math.random()*100.0,
+      valid: 0,
     }
     // params.seed = Math.random();
 
+    
     const goButton = document.getElementById("goButton");
     goButton.addEventListener("click", function () {
-      console.log('send', params);
-
       const jsonData = params;
       fetch('https://thk-tower.glitch.me/send-json', {
           method: 'POST',
@@ -82,7 +106,7 @@
           body: JSON.stringify(jsonData),
       })
       .then(response => response.json())
-      .then(data => console.log('Success:', data))
+      .then(data => { console.log('Success:', data); showText(); })
       .catch((error) => {
           console.error('Error:', error);
       });
@@ -97,10 +121,16 @@
     let velX = 0;
     let velY = 0;
     const callback = function(frame) {
-      velX *= 0.98;
-      velY *= 0.98;
-      params.val1 += velX;
-      params.val2 += velY;
+      if (!isDragging) {
+        let damp = 0.9;
+        velX *= damp;
+        velY *= damp;
+        params.val1 += velX;
+        params.val2 += velY;
+      } else {
+        velX *= 0.0;
+        velY *= 0.0;
+      }
       // console.log(velY);
     }
     lighthouse_generate(lighthouse_canvas, params, callback);
@@ -135,6 +165,8 @@
       const pos = getPointerPosition(event);
       prevX = pos.x;
       prevY = pos.y;
+      velX = 0;
+      velY = 0;
 
       // params.seed = Math.random();
     }
@@ -153,11 +185,18 @@
       prevX = currentX;
       prevY = currentY;
 
-      dx = dx / lighthouse_canvas.width;
+      dx = dx / lighthouse_canvas.height;
       dy = dy / lighthouse_canvas.height;
 
-      velX = -dx;
-      velY = -dy;
+      dx = dx * -1.0;
+      dy = dy * -1.0;
+
+      params.val1 += dx*0.25;
+      params.val2 += dy*0.5;
+
+      velX = dx;
+      velY = dy;
+
 
       // params.val1 += dx;
       // params.val2 += -dy;
