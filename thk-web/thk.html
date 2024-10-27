@@ -73,9 +73,7 @@
     goButton.addEventListener("click", function () {
       console.log('send', params);
 
-
       const jsonData = params;
-
       fetch('https://thk-tower.glitch.me/send-json', {
           method: 'POST',
           headers: {
@@ -96,9 +94,12 @@
     let prevX = 0;
     let prevY = 0;
     let isDragging = false;
+    let velX = 0;
     let velY = 0;
     const callback = function(frame) {
+      velX *= 0.98;
       velY *= 0.98;
+      params.val1 += velX;
       params.val2 += velY;
       // console.log(velY);
     }
@@ -155,9 +156,10 @@
       dx = dx / lighthouse_canvas.width;
       dy = dy / lighthouse_canvas.height;
 
+      velX = -dx;
       velY = -dy;
 
-      params.val1 += dx;
+      // params.val1 += dx;
       // params.val2 += -dy;
 
     }
