@@ -49,15 +49,216 @@
       pointer-events: none;
     }
 
+
+
+
+
+
+  .container {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    /* transform: translate(5%, 3%); */
+    color: white;
+    pointer-events: none;
+    /* padding: 16px; */
+  }
+
+  .container-flex {
+    /* width: 100%;
+    height: 100%; */
+    display: flex;
+    flex-direction: column;
+    /* pointer-events: none; */
+  }
+  
+  .align-left {
+    text-align: left;
+    justify-content: left;
+  }
+  
+  .align-right {
+    text-align: right;
+    justify-content: right;
+  }
+
+  .align-center {
+    text-align: center;
+    justify-content: center;
+  }
+
+  .header {
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+    /* padding: 10px; */
+    /* background-color: #333; */
+    height: 7vh;
+    color: rgba(255, 255, 255, 0.8);
+    /* margin: 32px; */
+    /* width: 100%; */
+  }
+
+  .header-title {
+    font-size: 1.0em;
+    font-weight: 500;
+    text-align: center;
+    margin: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .header-sub {
+    font-size: 0.6em;
+    padding: 8px;
+    margin: 8px;
+    display: flex;
+    align-items: center;
+    width: 35%;
+  }
+
+  .content {
+    /* flex: 1; */
+    flex-grow: 1;
+    /* pointer-events: none; */
+    /* display: none; */
+    /* background-color: #444;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center; */
+    position: relative;
+  }
+
+  .footer {
+    display: flex;
+    justify-content: space-between;
+    flex-shrink: 1;
+    /* padding: 10px; */
+    /* background-color: #333; */
+    /* height: 100px; */
+    /* height: 10vw; */
+    height: 96px;
+  }
+
+  .butt-div {
+    /* display: flex; */
+    /* height: 58px; */
+    align-items: center;
+    /* justify-content: center; */
+    /* padding: 8px; */
+    flex-shrink: 1;
+  }
+  .go-butt-div {
+    flex-grow: 1;
+    flex-shrink: 0.6;
+  }
+
+  .butt {
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 64px;
+    border: 1.0px solid rgba(255, 255, 255, 0.0);
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 20px;
+    z-index: 10;
+    width: 64px;
+    height: 64px;
+    margin-left: 16px;
+    margin-right: 16px;
+    padding: 0;
+    pointer-events: all;
+
+  }
+
+  .go-butt {
+    width: 30vw;
+  
+  }
+
+  .butt:active {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+
+  .circle {
+    width: 60px;
+    height: 60px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 50%; /* Makes it a circle */
+    position: absolute;
+    /* transform: translate(-50%, -50%); */
+    cursor: pointer; /* Shows it's clickable */
+    pointer-events: all;
+    z-index: 200;
+  }
+
+  .circle_tl {
+    left: 10%;
+    top: 10%;
+  }
+  .circle_tr {
+    right: 10%;
+    top: 10%;
+  }
+  .circle_bl {
+    left: 10%;
+    bottom: 10%;
+  }
+  .circle_br {
+    right: 10%;
+    bottom: 10%;
+  }
+
+
+  .ui-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+  }
+
+
+
   </style>
 </head>
 <body>
   <div>
+
+
+    <div class="container">
+      <div class="container-flex">
+        <div class="header">
+          <div class="header-sub align-left">8°37'58.5"S</div>
+          <div class="header-title"><div class="header-title">THK CREATOR</div></div>
+          <div class="header-sub align-right">115°05'50.5"E</div>
+        </div>
+        <div class="content">
+          <div class="circle circle_tl" id="c1"></div>
+          <div class="circle circle_tr" id="c2"></div>
+          <div class="circle circle_bl" id="c3"></div>
+          <div class="circle circle_br" id="c4"></div>
+        </div>
+        <div class="footer">
+          <div class="butt-div align-left"><button class="butt">i</button></div>
+          <div class="butt-div align-center go-butt-div"><button class="butt go-butt">GO</button></div>
+          <div class="butt-div align-right"><button class="butt">?</button></div>
+        </div>
+      </div>
+    </div>
+
     <span id="centeredText">Entity sent to THK tower</span>
+    <canvas id="ui_canvas" class="ui-canvas"></canvas>
     <canvas id="lighthouse_canvas"></canvas>
-    <button id="goButton" class="go">
+    <!-- <button id="goButton" class="go">
       GO
-    </button>
+    </button> -->
+
+    
   </div>
 
   <script src="twgl.min.js"></script>
@@ -65,6 +266,383 @@
 
 
   <script>
+
+
+
+
+
+    const params = {
+      seed: 0,
+      val1: 0,
+      val2: 0,
+      tx: 0,
+      ty: 0,
+      val1a: 0.5,
+      val1b: 0.5,
+      val2a: 0.5,
+      val2b: 0.5,
+      val3a: 0.5,
+      val3b: 0.5,
+      val4a: 0.5,
+      val4b: 0.5
+    }
+
+
+    
+    function initUI() {
+      const ui_canvas = document.getElementById("ui_canvas");
+      const ui = ui_canvas.getContext("2d");
+      const canvas = document.getElementById("lighthouse_canvas");
+      const sl1 = document.getElementById("c1");
+      const sl2 = document.getElementById("c2");
+      const sl3 = document.getElementById("c3");
+      const sl4 = document.getElementById("c4");
+
+      function get_pos(e) {
+        let x = e.clientX;
+        let y = e.clientY;
+        if (e.touches) {
+          x = e.touches[0].clientX;
+          y = e.touches[0].clientY;
+        }
+        const rect = ui_canvas.getBoundingClientRect();
+        x -= rect.left;
+        y -= rect.top;
+        return { x, y };
+      }
+      
+
+      function initSlider(sl) {
+
+        const idx = parseInt(sl.id[1]) - 1;
+        let right = idx % 2 === 1;
+        let bottom = idx > 1;
+
+        let isDragging = false;
+        let pX = 0;
+        let pY = 0;
+
+        const rect = ui_canvas.getBoundingClientRect();
+        let slX = sl.getBoundingClientRect().left;
+        let slY = sl.getBoundingClientRect().top;
+
+
+        function handleStart(event) {
+          event.preventDefault();
+          isDragging = true;
+          handleMove(event);
+        }
+
+        function handleEnd(event) {
+          if (!isDragging) return;
+          event.preventDefault();
+          isDragging = false;
+        }
+
+        function handleMove(event) {
+          if (!isDragging) return;
+          // event.preventDefault();
+
+          const pos = get_pos(event);
+          pX = pos.x;
+          pY = pos.y;
+        }
+
+        function update() {
+
+          slX = sl.getBoundingClientRect().left + sl.clientWidth / 2;
+          slY = sl.getBoundingClientRect().top + sl.clientHeight / 2;
+
+          
+          let maxDist = canvas.width * 0.6;
+          let dist = Math.sqrt((pX - slX) * (pX - slX) + (pY - slY) * (pY - slY));
+          dist = Math.min(dist, maxDist);
+          
+          let dists = dist / maxDist;
+          dists = 1.0-dists;
+          dists = Math.max(0.001, Math.min(1, dists));
+          // dists = Math.pow(dists, 3.0);
+          let ax = (pX - slX) / dist;
+          let ay = (pY - slY) / dist;
+
+          let angle = Math.atan2(ay, ax);
+
+
+          let mp = Math.PI/2;
+
+          let amin = 0.125;
+          if (idx == 1) {
+            amin += 0.25;
+          }
+          if (idx == 2) {
+            amin += 0.75;
+          }
+          if (idx == 3) {
+            amin += 0.5;
+          }
+
+
+          let asize = 0.5;
+
+          // let amax = Math.PI/2 + Math.PI/4;
+
+          // if (idx == 1) {
+          //   amin += Math.PI/2;
+          //   amax += Math.PI/2;
+          // }
+          // if (idx == 2) {
+          //   amin += Math.PI;
+          //   amax += Math.PI;
+          // }
+  
+
+          function aval(a) {
+            let av = a / Math.PI / 2 + 0.5;
+            av = av - amin;
+            while (av < 0) av += 1.0;
+            av = Math.min(1.0, Math.max(0.0, av));
+            av = ((av-0.5)*2.0)+0.5;
+            av = Math.min(1.0, Math.max(0.0, av));
+
+            // av = (a - amin) / (amax - amin);
+            // a = a / (amax - amin);
+            // return Math.min(1.0, Math.max(0.0, a));
+            return av;
+          }
+
+          let av = aval(angle);
+          let av1 = av - dists*0.5;
+          let av2 = av + dists*0.5;
+          av1 = Math.min(1.0, Math.max(0.0, av1));
+          av2 = Math.min(1.0, Math.max(0.0, av2));
+
+          if (isDragging) {
+            console.log(av);
+          }
+
+          // angle = aclamp(angle);
+
+          // let av = aval(angle);
+
+
+          // angle = amin + av*(amax-amin);
+
+
+          // let a1 = angle - dists*Math.PI;
+          // let a2 = angle + dists*Math.PI;
+          let a0 = (amin*Math.PI*2.0) + (av-0.5)*Math.PI;
+          let a1 = (amin*Math.PI*2.0) + (av1-0.5)*Math.PI;
+          let a2 = (amin*Math.PI*2.0) + (av2-0.5)*Math.PI;
+          let a1_ = (amin*Math.PI*2.0) + (0.0-0.5)*Math.PI;
+          let a2_ = (amin*Math.PI*2.0) + (1.0-0.5)*Math.PI;
+
+
+
+          // a1 = aclamp(a1);
+          // a2 = aclamp(a2);
+
+          let sllw = 5;
+          let slw = sl.clientWidth / 2 - sllw/2+12;
+
+          ui.lineWidth = sllw;
+          ui.lineCap = "round";
+          ui.strokeStyle = "rgba(255, 255, 255, 0.2)";
+          ui.beginPath();
+          ui.arc(slX, slY, slw, a1_, a2_);
+          ui.stroke();
+          
+          ui.strokeStyle = "rgba(255, 255, 255, "+(1.0-dists)+")";
+          ui.beginPath();
+          ui.arc(slX, slY, slw, a1, a2);
+          ui.stroke();
+
+          let param_damp = 0.1;
+          function lerp(a, b, t) {
+            return a + (b - a) * t;
+          }
+          const param_name_a = "val" + (idx+1) + "a";
+          const param_name_b = "val" + (idx+1) + "b";
+          params[param_name_a] = lerp(params[param_name_a], 1.0-dists, param_damp);
+          params[param_name_b] = lerp(params[param_name_b], av, param_damp);
+
+          if (isDragging) {
+
+
+            
+
+
+            ui.fillStyle = "rgba(255, 255, 255, "+(1.0-dists)*(1.0-dists)*0.6+")";
+            ui.beginPath();
+            ui.arc(slX, slY, sl.clientWidth/2*Math.pow(Math.max(0.001, dists), 0.25), 0, Math.PI*2.0);
+            ui.fill();
+
+
+
+            // Stroke a circle on pointer position
+
+            let cs = 64;
+            ui.strokeStyle = "rgba(255, 255, 255, "+(1.0-dists)*0.25+")";
+            ui.lineWidth = 2;
+
+            // ui.beginPath();
+            // ui.arc(pX, pY, cs, 0, 2 * Math.PI);
+            // ui.stroke();
+
+            ui.beginPath();
+            ui.arc(slX, slY, dist, 0, 2 * Math.PI);
+            ui.stroke();
+
+            ui.beginPath();
+            ui.arc(slX, slY, maxDist, 0, 2 * Math.PI);
+            ui.stroke();
+
+            // ui.beginPath();
+            // ui.moveTo(slX+ax*sl.clientWidth/2, slY+ay*sl.clientHeight/2);
+            // ui.lineTo(pX, pY);
+            // ui.stroke();
+
+            let a1x = Math.cos(a1);
+            let a1y = Math.sin(a1);
+            let a2x = Math.cos(a2);
+            let a2y = Math.sin(a2);
+            ui.beginPath();
+            ui.moveTo(slX+a1x*(slw+sllw/2), slY+a1y*(slw+sllw/2));
+            ui.lineTo(slX+a1x*dist, slY+a1y*dist);
+            ui.stroke();
+            ui.beginPath();
+            ui.moveTo(slX+a2x*(slw+sllw/2), slY+a2y*(slw+sllw/2));
+            ui.lineTo(slX+a2x*dist, slY+a2y*dist);
+            ui.stroke();
+            
+
+
+
+          }
+        }
+
+        sl.addEventListener('mousedown', handleStart, false);
+        sl.addEventListener('mousemove', handleMove, false);
+        sl.addEventListener('mouseup', handleEnd, false);
+        ui_canvas.addEventListener('mousemove', handleMove, false);
+        ui_canvas.addEventListener('mouseup', handleEnd, false);
+
+        sl.addEventListener('touchstart', handleStart, false);
+        sl.addEventListener('touchmove', handleMove, false);
+        sl.addEventListener('touchend', handleEnd, false);
+        sl.addEventListener('touchcancel', handleEnd, false);
+        ui_canvas.addEventListener('touchmove', handleMove, false);
+        ui_canvas.addEventListener('touchend', handleEnd, false);
+        ui_canvas.addEventListener('touchcancel', handleEnd, false);
+
+        return update;
+
+      }
+
+      const update1 = initSlider(sl1);
+      const update2 = initSlider(sl2);
+      const update3 = initSlider(sl3);
+      const update4 = initSlider(sl4);
+
+
+      let isDragging = false;
+      let prevX = 0;
+      let prevY = 0;
+      let pX = 0;
+      let pY = 0;
+      let velX = 0;
+      let velY = 0;
+      let damp = 0.2;
+      
+      function lerpf(a, b, t) {
+        return a + (b - a) * t;
+      }
+
+      function handleStart(event) {
+        event.preventDefault();
+        isDragging = true;
+        let pos = get_pos(event);
+        pX = pos.x;
+        pY = pos.y;
+        prevX = pX;
+        prevY = pY;
+        handleMove(event);
+      }
+
+      function handleEnd(event) {
+        if (!isDragging) return;
+        event.preventDefault();
+        isDragging = false;
+      }
+
+      function handleMove(event) {
+        if (!isDragging) return;
+        event.preventDefault();
+        const pos = get_pos(event);
+        pX = pos.x;
+        pY = pos.y;
+      }
+
+      ui_canvas.addEventListener('mousedown', handleStart, false);
+      ui_canvas.addEventListener('mousemove', handleMove, false);
+      ui_canvas.addEventListener('mouseup', handleEnd, false);
+
+      ui_canvas.addEventListener('touchstart', handleStart, false);
+      ui_canvas.addEventListener('touchmove', handleMove, false);
+      ui_canvas.addEventListener('touchend', handleEnd, false);
+      ui_canvas.addEventListener('touchcancel', handleEnd, false);
+
+
+      function updateUI() {
+        const client_width = canvas.clientWidth;
+        const client_height = canvas.clientHeight;
+        if (client_width !== ui_canvas.width || client_height !== ui_canvas.height) {
+          ui_canvas.width = client_width;
+          ui_canvas.height = client_height;
+        }
+        if (client_width !== canvas.width || client_height !== canvas.height) {
+          canvas.width = client_width;
+          canvas.height = client_height;
+        }
+
+
+
+        ui.clearRect(0, 0, ui_canvas.width, ui_canvas.height);
+        update1();
+        update2();
+        update3();
+        update4();
+
+
+        let offX = 0.0;
+        let offY = 0.0;
+        if (isDragging) {
+          offX = pX - prevX;
+          offY = pY - prevY;
+          let nomrf = ui_canvas.width*4;
+          offX = offX / nomrf;
+          offY = offY / nomrf;
+          velX = lerpf(velX, offX, damp);
+          velY = lerpf(velY, offY, damp);
+        } else {
+          velX = lerpf(velX, 0, damp);
+          velY = lerpf(velY, 0, damp);
+        }
+        params.tx += velX;
+        params.ty += velY;
+        prevX = pX;
+        prevY = pY;
+
+
+
+      }
+
+      return updateUI;
+
+    }
+
+
+
+
     function showText() {
         const centeredText = document.getElementById("centeredText");
         centeredText.style.opacity = 1.0; // Show the text
@@ -85,141 +663,31 @@
     window.addEventListener('resize', resizeCanvas, false);
     resizeCanvas();
 
-    // Initialize your canvas content after resizing
-    const params = {
-      seed: 0,
-      val1: Math.random()*100.0,
-      val2: Math.random()*100.0,
-      valid: 0,
-    }
-    // params.seed = Math.random();
 
     
-    const goButton = document.getElementById("goButton");
-    goButton.addEventListener("click", function () {
-      const jsonData = params;
-      fetch('https://thk-tower.glitch.me/send-json', {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(jsonData),
-      })
-      .then(response => response.json())
-      .then(data => { console.log('Success:', data); showText(); })
-      .catch((error) => {
-          console.error('Error:', error);
-      });
+    // const goButton = document.getElementById("goButton");
+    // goButton.addEventListener("click", function () {
+    //   const jsonData = params;
+    //   fetch('https://thk-tower.glitch.me/send-json', {
+    //       method: 'POST',
+    //       headers: {
+    //           'Content-Type': 'application/json',
+    //       },
+    //       body: JSON.stringify(jsonData),
+    //   })
+    //   .then(response => response.json())
+    //   .then(data => { console.log('Success:', data); showText(); })
+    //   .catch((error) => {
+    //       console.error('Error:', error);
+    //   });
+    // });
+
+    const updateUI = initUI();
+
+    lighthouse_generate(lighthouse_canvas, params, updateUI);
 
 
-    });
-
-    // Variables to store the previous position
-    let prevX = 0;
-    let prevY = 0;
-    let isDragging = false;
-    let velX = 0;
-    let velY = 0;
-    const callback = function(frame) {
-      if (!isDragging) {
-        let damp = 0.9;
-        velX *= damp;
-        velY *= damp;
-        params.val1 += velX;
-        params.val2 += velY;
-      } else {
-        velX *= 0.0;
-        velY *= 0.0;
-      }
-      // console.log(velY);
-    }
-    lighthouse_generate(lighthouse_canvas, params, callback);
-
-
-    function getPointerPosition(event) {
-      let x, y;
-
-      if (event.type.startsWith('touch')) {
-        // Touch event
-        const touch = event.touches[0] || event.changedTouches[0];
-        x = touch.clientX;
-        y = touch.clientY;
-      } else {
-        // Mouse event
-        x = event.clientX;
-        y = event.clientY;
-      }
-
-      // Adjust for canvas position
-      const rect = lighthouse_canvas.getBoundingClientRect();
-      x -= rect.left;
-      y -= rect.top;
-
-      return { x, y };
-    }
-
-    function handleStart(event) {
-      event.preventDefault();
-      isDragging = true;
-
-      const pos = getPointerPosition(event);
-      prevX = pos.x;
-      prevY = pos.y;
-      velX = 0;
-      velY = 0;
-
-      // params.seed = Math.random();
-    }
-
-    function handleMove(event) {
-      if (!isDragging) return;
-      event.preventDefault();
-
-      const pos = getPointerPosition(event);
-      const currentX = pos.x;
-      const currentY = pos.y;
-
-      let dx = currentX - prevX;
-      let dy = currentY - prevY;
-
-      prevX = currentX;
-      prevY = currentY;
-
-      dx = dx / lighthouse_canvas.height;
-      dy = dy / lighthouse_canvas.height;
-
-      dx = dx * -1.0;
-      dy = dy * -1.0;
-
-      params.val1 += dx*0.25;
-      params.val2 += dy*0.5;
-
-      velX = dx;
-      velY = dy;
-
-
-      // params.val1 += dx;
-      // params.val2 += -dy;
-
-    }
-
-    function handleEnd(event) {
-      if (!isDragging) return;
-      event.preventDefault();
-      isDragging = false;
-    }
-
-    // Add event listeners for mouse and touch events
-    lighthouse_canvas.addEventListener('mousedown', handleStart, false);
-    lighthouse_canvas.addEventListener('mousemove', handleMove, false);
-    lighthouse_canvas.addEventListener('mouseup', handleEnd, false);
-    lighthouse_canvas.addEventListener('mouseleave', handleEnd, false);
-
-    lighthouse_canvas.addEventListener('touchstart', handleStart, false);
-    lighthouse_canvas.addEventListener('touchmove', handleMove, false);
-    lighthouse_canvas.addEventListener('touchend', handleEnd, false);
-    lighthouse_canvas.addEventListener('touchcancel', handleEnd, false);
-  </script>
+</script>
 
 
 

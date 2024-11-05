@@ -72,10 +72,11 @@ const lighthouse_generate = async (canvas, params, callback) => {
         vec2 puv = gl_PointCoord;
         puv = puv*2.0-1.0;
         float dist = length(puv);
-        float u_fade = 1.0;
+        float u_fade = 0.5;
         float fade = mix(0.001, 1.0, clamp(u_fade, 0.0, 1.0));
         float mask = smoothstep(1.0, 1.0-fade, dist);
         color.a *= mask;
+        color.rgb *= color.a;
         FragColor = color;
     }
     `;
@@ -175,10 +176,8 @@ const lighthouse_generate = async (canvas, params, callback) => {
             u_seed: params.seed,
             u_off: frame/60,
             u_offset: 0.1,
-            u_resx: res[0],
-            u_resy: res[1],
-            u_val1: params.val1,
-            u_val2: params.val2,
+            u_resx: canvas.width,
+            u_resy: canvas.height,
             u_mix1: 1.0,
             u_mix2: 0.0,
             u_move: 0.0,
@@ -188,6 +187,16 @@ const lighthouse_generate = async (canvas, params, callback) => {
             u_weight_high: 1.0,
             u_weight_low: 1.0,
             u_tex0: inTex,
+            u_tx: params.tx,
+            u_ty: params.ty,
+            u_val1a: params.val1a,
+            u_val1b: params.val1b,
+            u_val2a: params.val2a,
+            u_val2b: params.val2b,
+            u_val3a: params.val3a,
+            u_val3b: params.val3b,
+            u_val4a: params.val4a,
+            u_val4b: params.val4b
           });
           twgl.bindFramebufferInfo(gl, fbo);
           gl.drawBuffers([
