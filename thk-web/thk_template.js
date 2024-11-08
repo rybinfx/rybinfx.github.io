@@ -157,7 +157,10 @@ const lighthouse_generate = async (canvas, params, callback) => {
     let time0 = 0;
     let frame = 0;
 
+    let off = 0.0;
+
     function render(time) {
+      off += params.speed * 0.01;
       
       let tpassed = (time-time0);
       if (tpassed >= 1000/61) {
@@ -174,7 +177,7 @@ const lighthouse_generate = async (canvas, params, callback) => {
             numPoints: numPoints,
             // u_seed: params.seed,
             u_seed: params.seed,
-            u_off: frame/60,
+            u_off: off,
             u_offset: 0.1,
             u_resx: canvas.width,
             u_resy: canvas.height,
