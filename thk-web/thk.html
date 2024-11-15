@@ -188,7 +188,7 @@
   .circle {
     width: 60px;
     height: 60px;
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(255, 255, 255, 0.0);
     border-radius: 50%; /* Makes it a circle */
     position: absolute;
     /* transform: translate(-50%, -50%); */
@@ -246,8 +246,8 @@
           <div class="header-sub align-right">115°05'50.5"E</div>
         </div>
         <div class="content">
-          <div class="circle circle_tl" id="c1">N/A</div>
-          <div class="circle circle_tr" id="c2">MOTION</div>
+          <!-- <div class="circle circle_tl" id="c1">N/A</div>
+          <div class="circle circle_tr" id="c2">MOTION</div> -->
           <div class="circle circle_bl" id="c3">COLOR</div>
           <div class="circle circle_br" id="c4">SHAPE</div>
         </div>
@@ -281,11 +281,11 @@
 
     const params = {
       seed: 0,
-      speed: 0.0,
-      val1: 0,
-      val2: 0,
-      tx: 0,
-      ty: 0,
+      speed: 0.1,
+      val1: Math.random()*100.0,
+      val2: Math.random()*100.0,
+      tx: Math.random()*100.0,
+      ty: Math.random()*100.0,
       val1a: 0.0,
       val1b: 0.0,
       val2a: 0.0,
@@ -332,8 +332,10 @@
         let pX = 0;
         let pY = 0;
         let pA = 0;
-        let value = 0.0;
-        let value_target = 0.0;
+        let value = Math.random()*100.0;
+        let value_target = value;
+        let value_b = Math.random();
+        let value_b_target = value_b;
         
         if (idx == 1) {
           value = 0.5;
@@ -344,6 +346,8 @@
         }
         const param_name_a = "val" + (idx+1) + "a";
         params[param_name_a] = value_target;
+        const param_name_b = "val" + (idx+1) + "b";
+        params[param_name_b] = value_b;
 
         
         const rect = ui_canvas.getBoundingClientRect();
@@ -394,6 +398,7 @@
           dA *= Math.pow(dists, 1.3)*3.0;
           if (isDragging) {
             value_target += dA;
+            value_b_target = Math.min(Math.max(0.0, dists), 1.0);
           }
           pA = angle;
 
@@ -456,9 +461,9 @@
 
           // angle = amin + av*(amax-amin);
 
-          let a0 = value_target;
-          let a1 = a0 - Math.min(1.0, dists)*Math.PI*0.33;
-          let a2 = a0 + Math.min(1.0, dists)*Math.PI*0.33;
+          let a0 = value_target*2.0;
+          let a1 = a0 - Math.min(1.0, value_b_target)*Math.PI*0.9;
+          let a2 = a0 + Math.min(1.0, value_b_target)*Math.PI*0.9;
           // let a0 = (amin*Math.PI*2.0) + (av-0.5)*Math.PI;
           // let a1 = (amin*Math.PI*2.0) + (av1-0.5)*Math.PI;
           // let a2 = (amin*Math.PI*2.0) + (av2-0.5)*Math.PI;
@@ -481,25 +486,29 @@
           // ui.arc(slX, slY, slw, a1_, a2_);
           // ui.stroke();
           
-          ui.strokeStyle = "rgba(255, 255, 255, "+(0.2+Math.min(dists, 1.0)*0.5)+")";
+          ui.strokeStyle = "rgba(255, 255, 255, 0.33)";
           ui.beginPath();
           ui.arc(slX, slY, slw, a1, a2);
           ui.stroke();
-          ui.strokeStyle = "rgba(255, 255, 255, "+(0.2+Math.min(dists, 1.0)*0.5)+")";
+
+
+          ui.lineWidth = 1.0;
+          ui.strokeStyle = "rgba(255, 255, 255, 0.2)";
           ui.beginPath();
-          ui.arc(slX, slY, slw, a1+Math.PI, a2+Math.PI);
+          ui.arc(slX, slY, slw+sllw/2.0, 0.0, Math.PI*2.0);
           ui.stroke();
 
-          let param_damp = 0.5;
+          let param_a_damp = 0.5;
+          let param_b_damp = 0.1;
           function lerp(a, b, t) {
             return a + (b - a) * t;
           }
           const param_name_a = "val" + (idx+1) + "a";
           const param_name_b = "val" + (idx+1) + "b";
-          params[param_name_a] = lerp(params[param_name_a], value_target, param_damp);
+          params[param_name_a] = lerp(params[param_name_a], value_target, param_a_damp);
+          params[param_name_b] = lerp(params[param_name_b], value_b_target, param_b_damp);
           if (idx == 1) {
             params.speed = params[param_name_a];
-            console.log(value_target);
           }
           
           // params[param_name_b] = lerp(params[param_name_b], av, param_damp);
@@ -577,8 +586,8 @@
 
       }
 
-      const update1 = initSlider(sl1);
-      const update2 = initSlider(sl2);
+      // const update1 = initSlider(sl1);
+      // const update2 = initSlider(sl2);
       const update3 = initSlider(sl3);
       const update4 = initSlider(sl4);
 
@@ -590,7 +599,7 @@
       let pY = 0;
       let velX = 0;
       let velY = 0;
-      let damp = 0.2;
+      let damp = 0.1;
       
       function lerpf(a, b, t) {
         return a + (b - a) * t;
@@ -646,8 +655,8 @@
 
 
         ui.clearRect(0, 0, ui_canvas.width, ui_canvas.height);
-        update1();
-        update2();
+        // update1();
+        // update2();
         update3();
         update4();
 

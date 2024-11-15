@@ -53,7 +53,7 @@ const lighthouse_generate = async (canvas, params, callback) => {
         pos = vec4(pos.xyz, 1.0);
         ww = clamp(ww, 0.0, 10.0)*1.0;
         float ps = ww*point_size;
-        color.a *= 0.5;
+        // color.a *= 0.5;
         color.a = min(color.a, 1.0);
         v_color = color;
         gl_Position = pos;
