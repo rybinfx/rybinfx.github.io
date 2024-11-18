@@ -1,6 +1,6 @@
 
 
-const lighthouse_generate = async (canvas, params, callback) => {
+const lighthouse_generate = (canvas, params, callback) => {
 
 
     let res = [canvas.width, canvas.height];
@@ -159,85 +159,81 @@ const lighthouse_generate = async (canvas, params, callback) => {
 
     let off = 0.0;
 
-    function render(time) {
+    function render_f(time) {
       off += params.speed * 0.01;
       
       let tpassed = (time-time0);
-      if (tpassed >= 1000/61) {
-          let fps = Math.floor((1000/tpassed));
-          // console.log(params.seed);
-          gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
-          // Render positions
-          gl.disable(gl.BLEND);
-          gl.useProgram(programInfo.program);
-          twgl.setBuffersAndAttributes(gl, programInfo, bufferInfo);
-          twgl.setUniforms(programInfo, {
-            res: [fboWidth, fboHeight],
-            time: time*1000,
-            numPoints: numPoints,
-            // u_seed: params.seed,
-            u_seed: params.seed,
-            u_off: off,
-            u_offset: 0.1,
-            u_resx: canvas.width,
-            u_resy: canvas.height,
-            u_mix1: 1.0,
-            u_mix2: 0.0,
-            u_move: 0.0,
-            u_seed: params.seed,
-            u_speed: 0.5,
-            u_reflect: 0.0,
-            u_weight_high: 1.0,
-            u_weight_low: 1.0,
-            u_tex0: inTex,
-            u_tx: params.tx,
-            u_ty: params.ty,
-            u_val1a: params.val1a,
-            u_val1b: params.val1b,
-            u_val2a: params.val2a,
-            u_val2b: params.val2b,
-            u_val3a: params.val3a,
-            u_val3b: params.val3b,
-            u_val4a: params.val4a,
-            u_val4b: params.val4b
-          });
-          twgl.bindFramebufferInfo(gl, fbo);
-          gl.drawBuffers([
-            gl.COLOR_ATTACHMENT0,
-            gl.COLOR_ATTACHMENT1,
-            gl.NONE,
-            gl.NONE,
-          ]);
-          twgl.drawBufferInfo(gl, bufferInfo);
-    
-          // Draw points
-          twgl.bindFramebufferInfo(gl, null);
-          gl.useProgram(programInfo2.program);
-          gl.clearColor(0.0, 0.0, 0.0, 1.0);
-          gl.clear(gl.COLOR_BUFFER_BIT);
-          gl.enable(gl.BLEND);
-          gl.blendEquation(gl.MAX);
-          gl.blendFunc(gl.SRC_ALPHA, gl.ONE);
-          twgl.setBuffersAndAttributes(gl, programInfo2, bufferInfo2);
-          twgl.setUniforms(programInfo2, {
-            tex_size: [fbo.width, fbo.height],
-            point_size: res[1]/1024*2,
-            pos_tex: fbo.attachments[0],
-            color_tex: fbo.attachments[1]
-          });
-          twgl.drawBufferInfo(gl, bufferInfo2, gl.POINTS);
+      let fps = Math.floor((1000/tpassed));
+      // console.log(params.seed);
+      gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
+      // Render positions
+      gl.disable(gl.BLEND);
+      gl.useProgram(programInfo.program);
+      twgl.setBuffersAndAttributes(gl, programInfo, bufferInfo);
+      twgl.setUniforms(programInfo, {
+        res: [fboWidth, fboHeight],
+        time: time*1000,
+        numPoints: numPoints,
+        // u_seed: params.seed,
+        u_seed: params.seed,
+        u_off: off,
+        u_offset: 0.1,
+        u_resx: canvas.width,
+        u_resy: canvas.height,
+        u_mix1: 1.0,
+        u_mix2: 0.0,
+        u_move: 0.0,
+        u_seed: params.seed,
+        u_speed: 0.5,
+        u_reflect: 0.0,
+        u_weight_high: 1.0,
+        u_weight_low: 1.0,
+        u_tex0: inTex,
+        u_tx: params.tx,
+        u_ty: params.ty,
+        u_val1a: params.val1a,
+        u_val1b: params.val1b,
+        u_val2a: params.val2a,
+        u_val2b: params.val2b,
+        u_val3a: params.val3a,
+        u_val3b: params.val3b,
+        u_val4a: params.val4a,
+        u_val4b: params.val4b
+      });
+      twgl.bindFramebufferInfo(gl, fbo);
+      gl.drawBuffers([
+        gl.COLOR_ATTACHMENT0,
+        gl.COLOR_ATTACHMENT1,
+        gl.NONE,
+        gl.NONE,
+      ]);
+      twgl.drawBufferInfo(gl, bufferInfo);
 
-          callback(frame);
-          
-          // Update time
-          time0 = time;
-          frame += 1;
-        }
+      // Draw points
+      twgl.bindFramebufferInfo(gl, null);
+      gl.useProgram(programInfo2.program);
+      gl.clearColor(0.0, 0.0, 0.0, 1.0);
+      gl.clear(gl.COLOR_BUFFER_BIT);
+      gl.enable(gl.BLEND);
+      gl.blendEquation(gl.MAX);
+      gl.blendFunc(gl.SRC_ALPHA, gl.ONE);
+      twgl.setBuffersAndAttributes(gl, programInfo2, bufferInfo2);
+      twgl.setUniforms(programInfo2, {
+        tex_size: [fbo.width, fbo.height],
+        point_size: res[1]/1024*2,
+        pos_tex: fbo.attachments[0],
+        color_tex: fbo.attachments[1]
+      });
+      twgl.drawBufferInfo(gl, bufferInfo2, gl.POINTS);
+
+      callback(frame);
+      
+      // Update time
+      time0 = time;
+      frame += 1;
     
-        requestAnimationFrame(render);
     }
-    requestAnimationFrame(render);
 
-    return params;
+    return render_f;
 }
 

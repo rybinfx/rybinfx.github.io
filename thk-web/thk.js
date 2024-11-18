@@ -1,6 +1,6 @@
 
 
-const lighthouse_generate = async (canvas, params, callback) => {
+const lighthouse_generate = (canvas, params, callback) => {
 
 
     let res = [canvas.width, canvas.height];
@@ -642,131 +642,123 @@ PData draw() {
 
 	// Mesh Code
 	Seg Clone_0 = seg_even(float(int(point)), float(int(npoints)), float(int(1)));
-	Seg Clone_1 = seg_even(float(int(Clone_0.point)), float(int(Clone_0.npoints)), float(int(9)));
+	Seg Clone_1 = seg_even(float(int(Clone_0.point)), float(int(Clone_0.npoints)), float(int(1)));
 	Seg Clone_2 = seg_even(float(int(Clone_1.point)), float(int(Clone_1.npoints)), float(int(9)));
-	Seg Clone_3 = seg_even(float(int(Clone_2.point)), float(int(Clone_2.npoints)), float(int(236)));
+	Seg Clone_3 = seg_even(float(int(Clone_2.point)), float(int(Clone_2.npoints)), float(int(9)));
+	Seg Clone_4 = seg_even(float(int(Clone_3.point)), float(int(Clone_3.npoints)), float(int(236)));
 	
 
 	// Main Code Defs
 	float node28 = float(Clone_0.idx);
-	float node32 = float(Clone_1.idx);
-	float node56 = (float(u_off) * Clone_3.size);
-	float node52 = float((Clone_3.idx + fract(node56)));
-	bool node47 = (Clone_3.size > 1.0);
-	bool node50 = (!node47);
-	float node46_out0;
-	if (node47) {
-		node46_out0 = (node52 / Clone_3.size);
+	float node32 = float(Clone_2.idx);
+	float node58 = float((Clone_4.idx + fract((float(u_off) * Clone_4.size))));
+	bool node53 = (Clone_4.size > 1.0);
+	float node52_out0;
+	if (node53) {
+		node52_out0 = (node58 / Clone_4.size);
 	} else {
-		node46_out0 = fract((node52 + 0.5));
+		node52_out0 = fract((node58 + 0.5));
 	}
-	float node64 = fract(node46_out0);
-	float node76 = (node64 * 0.5);
-	bool node86 = (Clone_1.size > 1.0);
-	float node85_out0;
-	if (node86) {
-		node85_out0 = (node32 / (Clone_1.size - 1.0));
+	float node50 = fract(node52_out0);
+	float node77 = (node50 * 0.5);
+	bool node85 = (Clone_2.size > 1.0);
+	float node84_out0;
+	if (node85) {
+		node84_out0 = (node32 / (Clone_2.size - 1.0));
 	} else {
-		node85_out0 = 0.5;
+		node84_out0 = 0.5;
 	}
-	float node80 = ((1.0 - parabola(node85_out0, 1.0)) * mix(1.0, 1.0, clamp(u_val4b, 0.0, 1.0)));
-	bool node102 = (Clone_2.size > 1.0);
-	float node101_out0;
-	if (node102) {
-		node101_out0 = (float(Clone_2.idx) / (Clone_2.size - 1.0));
+	float node79 = ((1.0 - parabola(node84_out0, 1.0)) * mix(1.0, 1.0, clamp(u_val4b, 0.0, 1.0)));
+	bool node101 = (Clone_3.size > 1.0);
+	float node100_out0;
+	if (node101) {
+		node100_out0 = (float(Clone_3.idx) / (Clone_3.size - 1.0));
 	} else {
-		node101_out0 = 0.5;
+		node100_out0 = 0.5;
 	}
-	bool node97 = (Clone_1.idx < 4.0);
-	float node96_out0;
-	if (node97) {
-		node96_out0 = (1.0 - node101_out0);
+	bool node96 = (Clone_2.idx < 4.0);
+	float node95_out0;
+	if (node96) {
+		node95_out0 = (1.0 - node100_out0);
 	} else {
-		bool node111 = (Clone_1.idx != 4.0);
-		float node110_out0;
-		if (node111) {
-			node110_out0 = node101_out0;
+		bool node110 = (Clone_2.idx != 4.0);
+		float node109_out0;
+		if (node110) {
+			node109_out0 = node100_out0;
 		} else {
-			node110_out0 = (((1.0 - parabola(node101_out0, 0.25)) * 0.5) + 0.5);
+			node109_out0 = (((1.0 - parabola(node100_out0, 0.25)) * 0.5) + 0.5);
 		}
-		node96_out0 = node110_out0;
+		node95_out0 = node109_out0;
 	}
-	vec3 node74 = vec3((node76 + (u_ty * 2.0)), (node80 * 2.0), (node96_out0 * 0.1));
-	vec3 node72 = vec3(node74.x, node74.y, node74.z);
-	float node65 = pow(2.0, (ns_simplex3((vec3(node72.x, node72.y, node72.z) / 1.5)) * 3.0));
-	float node146 = node72.x;
-	float node147 = node72.y;
-	float node148 = node72.z;
-	vec3 node135 = (node72 + (vec3(((gain(((ns_simplex3((vec3(node146, node147, node148) / 1.5)) * 0.5) + 0.5), 2.0) * 2.0) - 1.0), ((gain(((ns_simplex3((vec3(node146, node147, (node148 + 33.333333333333336)) / 1.5)) * 0.5) + 0.5), 2.0) * 2.0) - 1.0), ((gain(((ns_simplex3((vec3(node146, node147, (node148 + 66.66666666666667)) / 1.5)) * 0.5) + 0.5), 2.0) * 2.0) - 1.0)) * 0.1));
-	float node61 = (gain(pow(node64, node65), node65) + (((gain(((ns_simplex3((vec3(node135.x, node135.y, node135.z) / 1.5)) * 0.5) + 0.5), 2.0) * 2.0) - 1.0) * 0.5));
-	float node43 = (floor(node46_out0) + node61);
-	vec4 node16 = vec4((0.5 + (float((float(float(((((node28 * 9.0) - node28) - 4.0) + node32))) / 9.0)) * mix(0.2, 0.8, n01(cos((((node43 + 0.5) * 3.141592653589793) * 2.0)))))), node43, 0.0, 0.0);
+	vec3 node76 = vec3(node77, (node79 * 2.0), (node95_out0 * 0.1));
+	vec3 node74 = vec3(node76.x, node76.y, node76.z);
+	float node67 = pow(2.0, (ns_simplex3((vec3(node74.x, node74.y, node74.z) / 1.5)) * 3.0));
+	float node144 = node74.x;
+	float node145 = node74.y;
+	float node146 = node74.z;
+	vec3 node133 = (node74 + (vec3(((gain(((ns_simplex3((vec3(node144, node145, node146) / 1.5)) * 0.5) + 0.5), 2.0) * 2.0) - 1.0), ((gain(((ns_simplex3((vec3(node144, node145, (node146 + 33.333333333333336)) / 1.5)) * 0.5) + 0.5), 2.0) * 2.0) - 1.0), ((gain(((ns_simplex3((vec3(node144, node145, (node146 + 66.66666666666667)) / 1.5)) * 0.5) + 0.5), 2.0) * 2.0) - 1.0)) * 0.1));
+	float node47 = (gain(pow(node50, node67), node67) + (((gain(((ns_simplex3((vec3(node133.x, node133.y, node133.z) / 1.5)) * 0.5) + 0.5), 2.0) * 2.0) - 1.0) * 0.5));
+	float node45 = (Clone_1.idx + node47);
+	vec4 node16 = vec4((0.5 + (float((float(float(((((node28 * 9.0) - node28) - 4.0) + node32))) / 9.0)) * mix(0.1, 0.7, pow(n01(cos((((pow(node45, 1.2) + 0.5) * 3.141592653589793) * 2.0))), 0.8)))), pow(node45, 1.0), 0.0, 0.0);
 	vec2 node14 = vec2(node16.x, node16.y);
-	float node219 = float((Clone_3.idx - floor(node56)));
-	float node217_out0;
-	if (node47) {
-		node217_out0 = (node219 / Clone_3.size);
+	float node212 = pcurve(fract(((n11(fract((node52_out0 + u_ty))) * (2.0 + (u_val4b * 4.0))) - (u_off * 4.0))), 1.0, 2.0);
+	vec2 node235 = vec2(u_val4a, 0.0);
+	vec3 node206 = (vec3(((node77 * (0.5 + u_val4b)) + (node212 * (0.1 + (u_val4b * 0.5)))), (node79 - u_val4a), (node95_out0 * ((ns_simplex2((vec2(node235.x, node235.y) / 1.5)) * 0.5) + 0.5))) + vec3((u_move * -1.0), 0.0, 0.0));
+	vec3 node205 = (node206 + vec3(((u_ty * -1.0) * 8.0), 0.0, 0.0));
+	vec3 node203 = vec3(node205.x, node205.y, node205.z);
+	float node257 = node203.x;
+	float node258 = node203.y;
+	float node259 = node203.z;
+	vec3 node202 = (node203 + (vec3(((gain(((ns_simplex3((vec3(node257, node258, node259) / 1.5)) * 0.5) + 0.5), 1.0) * 2.0) - 1.0), ((gain(((ns_simplex3((vec3(node257, node258, (node259 + 33.333333333333336)) / 1.5)) * 0.5) + 0.5), 1.0) * 2.0) - 1.0), ((gain(((ns_simplex3((vec3(node257, node258, (node259 + 66.66666666666667)) / 1.5)) * 0.5) + 0.5), 1.0) * 2.0) - 1.0)) * 0.1));
+	float node201 = node202.x;
+	float node278 = node202.y;
+	float node279 = node202.z;
+	vec3 node191 = (vec3(((gain(((ns_simplex3((vec3(node201, node278, node279) / 1.5)) * 0.5) + 0.5), 1.0) * 2.0) - 1.0), ((gain(((ns_simplex3((vec3(node201, node278, (node279 + 33.333333333333336)) / 1.5)) * 0.5) + 0.5), 1.0) * 2.0) - 1.0), ((gain(((ns_simplex3((vec3(node201, node278, (node279 + 66.66666666666667)) / 1.5)) * 0.5) + 0.5), 1.0) * 2.0) - 1.0)) * 0.06);
+	bool node183 = (node96 || ((Clone_2.idx == 4.0) && (node100_out0 > 0.5)));
+	vec3 node182_out0;
+	if (node183) {
+		node182_out0 = vec3((node191.x * -1.0), node191.y, node191.z);
 	} else {
-		node217_out0 = fract((node219 + 0.5));
+		node182_out0 = node191;
 	}
-	float node210 = pcurve(fract(((n11(fract(node217_out0)) * (2.0 + (u_val4b * 4.0))) + (u_off * 4.0))), 1.0, 2.0);
-	vec2 node239 = vec2(u_val4a, 0.0);
-	vec3 node205 = vec3(((node76 * (0.5 + u_val4b)) + (node210 * (0.1 + (u_val4b * 0.5)))), (node80 - u_val4a), (node96_out0 * ((ns_simplex2((vec2(node239.x, node239.y) / 1.5)) * 0.5) + 0.5)));
-	vec3 node204 = (node205 + vec3(0.0, 0.0, u_ty));
-	vec3 node202 = vec3(node204.x, node204.y, node204.z);
-	float node254 = node202.x;
-	float node255 = node202.y;
-	float node256 = node202.z;
-	vec3 node201 = (node202 + (vec3(((gain(((ns_simplex3((vec3(node254, node255, node256) / 1.5)) * 0.5) + 0.5), 1.0) * 2.0) - 1.0), ((gain(((ns_simplex3((vec3(node254, node255, (node256 + 33.333333333333336)) / 1.5)) * 0.5) + 0.5), 1.0) * 2.0) - 1.0), ((gain(((ns_simplex3((vec3(node254, node255, (node256 + 66.66666666666667)) / 1.5)) * 0.5) + 0.5), 1.0) * 2.0) - 1.0)) * 0.1));
-	float node200 = node201.x;
-	float node275 = node201.y;
-	float node276 = node201.z;
-	vec3 node190 = (vec3(((gain(((ns_simplex3((vec3(node200, node275, node276) / 1.5)) * 0.5) + 0.5), 1.0) * 2.0) - 1.0), ((gain(((ns_simplex3((vec3(node200, node275, (node276 + 33.333333333333336)) / 1.5)) * 0.5) + 0.5), 1.0) * 2.0) - 1.0), ((gain(((ns_simplex3((vec3(node200, node275, (node276 + 66.66666666666667)) / 1.5)) * 0.5) + 0.5), 1.0) * 2.0) - 1.0)) * 0.06);
-	bool node182 = (node97 || ((Clone_1.idx == 4.0) && (node101_out0 > 0.5)));
-	vec3 node181_out0;
-	if (node182) {
-		node181_out0 = vec3((node190.x * -1.0), node190.y, node190.z);
-	} else {
-		node181_out0 = node190;
-	}
-	vec2 node178 = rot2(node181_out0.xz, (n11(node101_out0) * 0.25));
-	pos = (((((((vec3(0.0, 0.0, 0.0) + vec3(n11(node14.x), n11(node14.y), 0.0)) + vec3(node178.x, node181_out0.y, node178.y)) * vec3((0.5625 / (u_resx / u_resy)), 1.0, 1.0)) * vec3(1.0, 1.0, 1.0)) * vec3(1.0, 1.0, 1.0)) * vec3(1.0, 0.8, 1.0)) + vec3(0.0, 0.06, 0.0));
+	vec2 node179 = rot2(node182_out0.xz, (n11(node100_out0) * 0.25));
+	pos = (((((((vec3(0.0, 0.0, 0.0) + vec3(n11(node14.x), n11(node14.y), 0.0)) + vec3(node179.x, node182_out0.y, node179.y)) * vec3((0.5625 / (u_resx / u_resy)), 1.0, 1.0)) * vec3(1.0, 1.0, 1.0)) * vec3(1.0, 1.0, 1.0)) * vec3(1.0, 0.8, 1.0)) + vec3(0.0, 0.06, 0.0));
 	alpha = 1.0;
-	vec3 node341 = ((node205 * vec3(1.0, 1.0, 1.0)) + vec3(u_val3a, 0.0, 0.0));
-	float node340 = node341.x;
-	float node346 = node341.y;
-	float node348 = node341.z;
-	vec3 node339 = vec3(node340, node346, (node348 + 63.32));
-	float node360 = node339.x;
-	float node361 = node339.y;
-	float node362 = node339.z;
-	vec3 node338 = (node339 + (vec3(((gain(((ns_simplex3((vec3(node360, node361, node362) / 1.5)) * 0.5) + 0.5), 1.0) * 2.0) - 1.0), ((gain(((ns_simplex3((vec3(node360, node361, (node362 + 33.333333333333336)) / 1.5)) * 0.5) + 0.5), 1.0) * 2.0) - 1.0), ((gain(((ns_simplex3((vec3(node360, node361, (node362 + 66.66666666666667)) / 1.5)) * 0.5) + 0.5), 1.0) * 2.0) - 1.0)) * 0.1));
-	float node384 = gain(pow(node210, 8.0), 2.0);
-	weight = mix(1.5, 3.0, (((clamp(mix(0.5, 1.0, 1.0), 0.0, 1.0) * (pow(((((gain(((ns_simplex3((vec3(node338.x, node338.y, node338.z) / 1.5)) * 0.5) + 0.5), 1.0) * 2.0) - 1.0) * 0.5) + 0.5), 1.0) + (node384 * 0.5))) * mix(1.0, 2.0, node384)) * ((clamp(parabola(node61, 1.0), 0.0, 1.0) * 0.75) + 0.25)));
-	float node403 = float((u_val3a * 0.1));
-	vec3 node424 = vec3(node340, node346, (node348 + 23.32));
-	float node437 = node424.x;
-	float node438 = node424.y;
-	float node439 = node424.z;
-	vec3 node423 = (node424 + (vec3(((gain(((ns_simplex3((vec3(node437, node438, node439) / 1.5)) * 0.5) + 0.5), 1.0) * 2.0) - 1.0), ((gain(((ns_simplex3((vec3(node437, node438, (node439 + 33.333333333333336)) / 1.5)) * 0.5) + 0.5), 1.0) * 2.0) - 1.0), ((gain(((ns_simplex3((vec3(node437, node438, (node439 + 66.66666666666667)) / 1.5)) * 0.5) + 0.5), 1.0) * 2.0) - 1.0)) * 0.1));
-	float node468 = node423.x;
-	float node469 = node423.y;
-	float node470 = node423.z;
-	vec3 node422 = (node423 + (vec3(((gain(((ns_simplex3((vec3(node468, node469, node470) / 1.5)) * 0.5) + 0.5), 1.0) * 2.0) - 1.0), ((gain(((ns_simplex3((vec3(node468, node469, (node470 + 33.333333333333336)) / 1.5)) * 0.5) + 0.5), 1.0) * 2.0) - 1.0), ((gain(((ns_simplex3((vec3(node468, node469, (node470 + 66.66666666666667)) / 1.5)) * 0.5) + 0.5), 1.0) * 2.0) - 1.0)) * 0.1));
-	hue = (((((ns_simplex2((vec2(node403, 0.0) / 1.5)) + (ns_simplex2((vec2((node403 * 2.0), 0.0) / 1.5)) * 0.5)) / 1.5) * 2.0) + (((((gain(((ns_simplex3((vec3(node422.x, node422.y, node422.z) / 1.5)) * 0.5) + 0.5), 1.0) * 2.0) - 1.0) * 0.5) + 0.5) * 0.33)) + (-0.0825 * node384));
-	vec3 node511 = vec3(node340, node346, (node348 + 123.32));
-	float node524 = node511.x;
-	float node525 = node511.y;
-	float node526 = node511.z;
-	vec3 node510 = (node511 + (vec3(((gain(((ns_simplex3((vec3(node524, node525, node526) / 1.5)) * 0.5) + 0.5), 2.0) * 2.0) - 1.0), ((gain(((ns_simplex3((vec3(node524, node525, (node526 + 33.333333333333336)) / 1.5)) * 0.5) + 0.5), 2.0) * 2.0) - 1.0), ((gain(((ns_simplex3((vec3(node524, node525, (node526 + 66.66666666666667)) / 1.5)) * 0.5) + 0.5), 2.0) * 2.0) - 1.0)) * 0.1));
-	float node548 = pow(u_val3b, 1.0);
-	sat = pow(pow(pow(((((gain(((ns_simplex3((vec3(node510.x, node510.y, node510.z) / 1.5)) * 0.5) + 0.5), 2.0) * 2.0) - 1.0) * 0.5) + 0.5), mix(4.0, 0.5, node548)), 1.5), (1.0 - (node384 * 0.2)));
-	vec3 node571 = vec3(node340, node346, node348);
-	float node582 = node571.x;
-	float node583 = node571.y;
-	float node584 = node571.z;
-	vec3 node570 = (node571 + (vec3(((gain(((ns_simplex3((vec3(node582, node583, node584) / 1.5)) * 0.5) + 0.5), 2.0) * 2.0) - 1.0), ((gain(((ns_simplex3((vec3(node582, node583, (node584 + 33.333333333333336)) / 1.5)) * 0.5) + 0.5), 2.0) * 2.0) - 1.0), ((gain(((ns_simplex3((vec3(node582, node583, (node584 + 66.66666666666667)) / 1.5)) * 0.5) + 0.5), 2.0) * 2.0) - 1.0)) * 0.1));
-	val = (clamp(parabola(node61, 0.9), 0.0, 1.0) * pow(((((gain(((ns_simplex3((vec3(node570.x, node570.y, node570.z) / 1.5)) * 0.5) + 0.5), 2.0) * 2.0) - 1.0) * 0.5) + 0.5), mix(2.0, 1.0, node548)));
+	vec3 node344 = ((node206 * vec3(1.0, 1.0, 1.0)) + vec3(u_val3a, 0.0, 0.0));
+	float node343 = node344.x;
+	float node349 = node344.y;
+	float node351 = node344.z;
+	vec3 node342 = vec3(node343, node349, (node351 + 63.32));
+	float node363 = node342.x;
+	float node364 = node342.y;
+	float node365 = node342.z;
+	vec3 node341 = (node342 + (vec3(((gain(((ns_simplex3((vec3(node363, node364, node365) / 1.5)) * 0.5) + 0.5), 1.0) * 2.0) - 1.0), ((gain(((ns_simplex3((vec3(node363, node364, (node365 + 33.333333333333336)) / 1.5)) * 0.5) + 0.5), 1.0) * 2.0) - 1.0), ((gain(((ns_simplex3((vec3(node363, node364, (node365 + 66.66666666666667)) / 1.5)) * 0.5) + 0.5), 1.0) * 2.0) - 1.0)) * 0.1));
+	float node387 = gain(pow(node212, 8.0), 2.0);
+	weight = mix(1.5, 3.0, ((((clamp(mix(0.5, 1.0, 1.0), 0.0, 1.0) * (pow(((((gain(((ns_simplex3((vec3(node341.x, node341.y, node341.z) / 1.5)) * 0.5) + 0.5), 1.0) * 2.0) - 1.0) * 0.5) + 0.5), 1.0) + (node387 * 0.5))) * mix(1.0, 2.0, node387)) * mix(u_weight_low, u_weight_high, pow((Clone_1.idx + node52_out0), 3.0))) * ((clamp(parabola(node47, 1.0), 0.0, 1.0) * 0.75) + 0.25)));
+	float node411 = float((u_val3a * 0.1));
+	vec3 node432 = vec3(node343, node349, (node351 + 23.32));
+	float node445 = node432.x;
+	float node446 = node432.y;
+	float node447 = node432.z;
+	vec3 node431 = (node432 + (vec3(((gain(((ns_simplex3((vec3(node445, node446, node447) / 1.5)) * 0.5) + 0.5), 1.0) * 2.0) - 1.0), ((gain(((ns_simplex3((vec3(node445, node446, (node447 + 33.333333333333336)) / 1.5)) * 0.5) + 0.5), 1.0) * 2.0) - 1.0), ((gain(((ns_simplex3((vec3(node445, node446, (node447 + 66.66666666666667)) / 1.5)) * 0.5) + 0.5), 1.0) * 2.0) - 1.0)) * 0.1));
+	float node476 = node431.x;
+	float node477 = node431.y;
+	float node478 = node431.z;
+	vec3 node430 = (node431 + (vec3(((gain(((ns_simplex3((vec3(node476, node477, node478) / 1.5)) * 0.5) + 0.5), 1.0) * 2.0) - 1.0), ((gain(((ns_simplex3((vec3(node476, node477, (node478 + 33.333333333333336)) / 1.5)) * 0.5) + 0.5), 1.0) * 2.0) - 1.0), ((gain(((ns_simplex3((vec3(node476, node477, (node478 + 66.66666666666667)) / 1.5)) * 0.5) + 0.5), 1.0) * 2.0) - 1.0)) * 0.1));
+	hue = fract((((((ns_simplex2((vec2(node411, 0.0) / 1.5)) + (ns_simplex2((vec2((node411 * 2.0), 0.0) / 1.5)) * 0.5)) / 1.5) * 2.0) + (((((gain(((ns_simplex3((vec3(node430.x, node430.y, node430.z) / 1.5)) * 0.5) + 0.5), 1.0) * 2.0) - 1.0) * 0.5) + 0.5) * 0.33)) + (-0.0825 * node387)));
+	vec3 node519 = vec3(node343, node349, (node351 + 123.32));
+	float node532 = node519.x;
+	float node533 = node519.y;
+	float node534 = node519.z;
+	vec3 node518 = (node519 + (vec3(((gain(((ns_simplex3((vec3(node532, node533, node534) / 1.5)) * 0.5) + 0.5), 2.0) * 2.0) - 1.0), ((gain(((ns_simplex3((vec3(node532, node533, (node534 + 33.333333333333336)) / 1.5)) * 0.5) + 0.5), 2.0) * 2.0) - 1.0), ((gain(((ns_simplex3((vec3(node532, node533, (node534 + 66.66666666666667)) / 1.5)) * 0.5) + 0.5), 2.0) * 2.0) - 1.0)) * 0.1));
+	float node556 = pow(u_val3b, 1.0);
+	sat = pow(pow(pow(((((gain(((ns_simplex3((vec3(node518.x, node518.y, node518.z) / 1.5)) * 0.5) + 0.5), 2.0) * 2.0) - 1.0) * 0.5) + 0.5), mix(4.0, 0.5, node556)), 1.5), (1.0 - (node387 * 0.2)));
+	vec3 node579 = vec3(node343, node349, node351);
+	float node590 = node579.x;
+	float node591 = node579.y;
+	float node592 = node579.z;
+	vec3 node578 = (node579 + (vec3(((gain(((ns_simplex3((vec3(node590, node591, node592) / 1.5)) * 0.5) + 0.5), 2.0) * 2.0) - 1.0), ((gain(((ns_simplex3((vec3(node590, node591, (node592 + 33.333333333333336)) / 1.5)) * 0.5) + 0.5), 2.0) * 2.0) - 1.0), ((gain(((ns_simplex3((vec3(node590, node591, (node592 + 66.66666666666667)) / 1.5)) * 0.5) + 0.5), 2.0) * 2.0) - 1.0)) * 0.1));
+	val = (clamp(parabola(node52_out0, 2.0), 0.0, 1.0) * pow(((((gain(((ns_simplex3((vec3(node578.x, node578.y, node578.z) / 1.5)) * 0.5) + 0.5), 2.0) * 2.0) - 1.0) * 0.5) + 0.5), mix(2.0, 1.0, node556)));
 	
 
 
@@ -934,85 +926,81 @@ void main()
 
     let off = 0.0;
 
-    function render(time) {
+    function render_f(time) {
       off += params.speed * 0.01;
       
       let tpassed = (time-time0);
-      if (tpassed >= 1000/61) {
-          let fps = Math.floor((1000/tpassed));
-          // console.log(params.seed);
-          gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
-          // Render positions
-          gl.disable(gl.BLEND);
-          gl.useProgram(programInfo.program);
-          twgl.setBuffersAndAttributes(gl, programInfo, bufferInfo);
-          twgl.setUniforms(programInfo, {
-            res: [fboWidth, fboHeight],
-            time: time*1000,
-            numPoints: numPoints,
-            // u_seed: params.seed,
-            u_seed: params.seed,
-            u_off: off,
-            u_offset: 0.1,
-            u_resx: canvas.width,
-            u_resy: canvas.height,
-            u_mix1: 1.0,
-            u_mix2: 0.0,
-            u_move: 0.0,
-            u_seed: params.seed,
-            u_speed: 0.5,
-            u_reflect: 0.0,
-            u_weight_high: 1.0,
-            u_weight_low: 1.0,
-            u_tex0: inTex,
-            u_tx: params.tx,
-            u_ty: params.ty,
-            u_val1a: params.val1a,
-            u_val1b: params.val1b,
-            u_val2a: params.val2a,
-            u_val2b: params.val2b,
-            u_val3a: params.val3a,
-            u_val3b: params.val3b,
-            u_val4a: params.val4a,
-            u_val4b: params.val4b
-          });
-          twgl.bindFramebufferInfo(gl, fbo);
-          gl.drawBuffers([
-            gl.COLOR_ATTACHMENT0,
-            gl.COLOR_ATTACHMENT1,
-            gl.NONE,
-            gl.NONE,
-          ]);
-          twgl.drawBufferInfo(gl, bufferInfo);
-    
-          // Draw points
-          twgl.bindFramebufferInfo(gl, null);
-          gl.useProgram(programInfo2.program);
-          gl.clearColor(0.0, 0.0, 0.0, 1.0);
-          gl.clear(gl.COLOR_BUFFER_BIT);
-          gl.enable(gl.BLEND);
-          gl.blendEquation(gl.MAX);
-          gl.blendFunc(gl.SRC_ALPHA, gl.ONE);
-          twgl.setBuffersAndAttributes(gl, programInfo2, bufferInfo2);
-          twgl.setUniforms(programInfo2, {
-            tex_size: [fbo.width, fbo.height],
-            point_size: res[1]/1024*2,
-            pos_tex: fbo.attachments[0],
-            color_tex: fbo.attachments[1]
-          });
-          twgl.drawBufferInfo(gl, bufferInfo2, gl.POINTS);
+      let fps = Math.floor((1000/tpassed));
+      // console.log(params.seed);
+      gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
+      // Render positions
+      gl.disable(gl.BLEND);
+      gl.useProgram(programInfo.program);
+      twgl.setBuffersAndAttributes(gl, programInfo, bufferInfo);
+      twgl.setUniforms(programInfo, {
+        res: [fboWidth, fboHeight],
+        time: time*1000,
+        numPoints: numPoints,
+        // u_seed: params.seed,
+        u_seed: params.seed,
+        u_off: off,
+        u_offset: 0.1,
+        u_resx: canvas.width,
+        u_resy: canvas.height,
+        u_mix1: 1.0,
+        u_mix2: 0.0,
+        u_move: 0.0,
+        u_seed: params.seed,
+        u_speed: 0.5,
+        u_reflect: 0.0,
+        u_weight_high: 1.0,
+        u_weight_low: 1.0,
+        u_tex0: inTex,
+        u_tx: params.tx,
+        u_ty: params.ty,
+        u_val1a: params.val1a,
+        u_val1b: params.val1b,
+        u_val2a: params.val2a,
+        u_val2b: params.val2b,
+        u_val3a: params.val3a,
+        u_val3b: params.val3b,
+        u_val4a: params.val4a,
+        u_val4b: params.val4b
+      });
+      twgl.bindFramebufferInfo(gl, fbo);
+      gl.drawBuffers([
+        gl.COLOR_ATTACHMENT0,
+        gl.COLOR_ATTACHMENT1,
+        gl.NONE,
+        gl.NONE,
+      ]);
+      twgl.drawBufferInfo(gl, bufferInfo);
 
-          callback(frame);
-          
-          // Update time
-          time0 = time;
-          frame += 1;
-        }
+      // Draw points
+      twgl.bindFramebufferInfo(gl, null);
+      gl.useProgram(programInfo2.program);
+      gl.clearColor(0.0, 0.0, 0.0, 1.0);
+      gl.clear(gl.COLOR_BUFFER_BIT);
+      gl.enable(gl.BLEND);
+      gl.blendEquation(gl.MAX);
+      gl.blendFunc(gl.SRC_ALPHA, gl.ONE);
+      twgl.setBuffersAndAttributes(gl, programInfo2, bufferInfo2);
+      twgl.setUniforms(programInfo2, {
+        tex_size: [fbo.width, fbo.height],
+        point_size: res[1]/1024*2,
+        pos_tex: fbo.attachments[0],
+        color_tex: fbo.attachments[1]
+      });
+      twgl.drawBufferInfo(gl, bufferInfo2, gl.POINTS);
+
+      callback(frame);
+      
+      // Update time
+      time0 = time;
+      frame += 1;
     
-        requestAnimationFrame(render);
     }
-    requestAnimationFrame(render);
 
-    return params;
+    return render_f;
 }
 
