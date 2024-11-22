@@ -13,6 +13,9 @@
       overflow: hidden;
       font-family: Arial, Helvetica, sans-serif;
     }
+    html {
+      background-color: #000;
+    }
     canvas {
       display: block;
     }
@@ -132,6 +135,8 @@
     display: flex;
     justify-content: center;
     align-items: center; */
+    opacity: 1.0;
+    transition: opacity ease-in-out 0.5s;
     position: relative;
   }
 
@@ -235,10 +240,22 @@
     z-index: 1;
   }
 
+  #lighthouse_canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -10;
+    /* border: 1px solid #888; */
+    border-radius: 16px;
+    transform: translateY(-0%) scale(1.0);
+    /* transition: transform 1s ease-in-out; */
+    transition: transform 0.5s ease-in-out, border-color 0.5s ease-in-out;
+  }
+
 
 
   </style>
-  <script type="module" crossorigin src="/assets/index-D2W84q6e.js"></script>
+  <script type="module" crossorigin src="/assets/index-CMwVZNn0.js"></script>
 </head>
 <body>
   <div>
