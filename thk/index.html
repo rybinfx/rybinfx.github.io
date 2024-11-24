@@ -3,276 +3,25 @@
 <head>    
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>THK Sync</title>
-  <style>
-    html, body, div, canvas {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      font-family: Arial, Helvetica, sans-serif;
-    }
-    html {
-      background-color: #000;
-    }
-    canvas {
-      display: block;
-    }
-    .go {
-      background-color: #ffffff19;
-      border-radius: 64px;
-      border: 1.0px solid rgba(255, 255, 255, 0.2);
-      color: rgba(255, 255, 255, 0.747);
-      
-      position: absolute;
-      bottom: 5%; left: 50%;
-      transform: translateX(-50%);
-      padding: 16px 26px;
-      font-size: 20px;
-      z-index: 10;
-    }
-    
-    .go:active {
-      background-color: white;
-      color: black;
-    }
-    /* Centered div styling */
-    #centeredText {
-      color: rgba(255, 255, 255, 1.0);
-      position: absolute;
-      bottom: 55%; left: 50%;
-      transform: translateX(-50%) translateY(50%);
-      /* padding: 16px 26px; */
-      line-height: 1.5;
-      width: 90%;
-      font-size: 1.0em;
-      z-index: 10;
-      text-align: center;
-      transition: opacity 1s;
-      opacity: 0.0;
-      pointer-events: none;
-    }
-
-
-
-
-
-
-  .container {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    /* transform: translate(5%, 3%); */
-    color: white;
-    pointer-events: none;
-    /* padding: 16px; */
-  }
-
-  .container-flex {
-    /* width: 100%;
-    height: 100%; */
-    display: flex;
-    flex-direction: column;
-    /* pointer-events: none; */
-  }
-  
-  .align-left {
-    text-align: left;
-    justify-content: left;
-  }
-  
-  .align-right {
-    text-align: right;
-    justify-content: right;
-  }
-
-  .align-center {
-    text-align: center;
-    justify-content: center;
-  }
-
-  .header {
-    display: flex;
-    justify-content:space-between;
-    align-items: center;
-    /* padding: 10px; */
-    /* background-color: #333; */
-    height: 7vh;
-    color: rgba(255, 255, 255, 0.8);
-    /* margin: 32px; */
-    /* width: 100%; */
-  }
-
-  .header-title {
-    font-size: 1.0em;
-    font-weight: 500;
-    text-align: center;
-    margin: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .header-sub {
-    font-size: 0.6em;
-    padding: 8px;
-    margin: 8px;
-    display: flex;
-    align-items: center;
-    width: 35%;
-  }
-
-  .content {
-    /* flex: 1; */
-    flex-grow: 1;
-    /* pointer-events: none; */
-    /* display: none; */
-    /* background-color: #444;
-    
-    display: flex;
-    justify-content: center;
-    align-items: center; */
-    opacity: 1.0;
-    transition: opacity ease-in-out 0.5s;
-    position: relative;
-  }
-
-  .footer {
-    display: flex;
-    justify-content: space-between;
-    flex-shrink: 1;
-    /* padding: 10px; */
-    /* background-color: #333; */
-    /* height: 100px; */
-    /* height: 10vw; */
-    height: 96px;
-  }
-
-  .butt-div {
-    /* display: flex; */
-    /* height: 58px; */
-    align-items: center;
-    /* justify-content: center; */
-    /* padding: 8px; */
-    flex-shrink: 1;
-    z-index: 100;
-  }
-  .go-butt-div {
-    flex-grow: 1;
-    flex-shrink: 0.6;
-  }
-
-  .butt {
-    cursor: pointer;
-    background-color: rgba(255, 255, 255, 0.0);
-    border-radius: 60px;
-    border: 2.0px solid rgba(255, 255, 255, 0.2);
-    color: rgba(255, 255, 255, 0.5);
-    font-size: 20px;
-    z-index: 200;
-    width: 60px;
-    height: 60px;
-    margin-left: 12px;
-    margin-right: 12px;
-    padding: 0;
-    pointer-events: all;
-
-  }
-
-  .go-butt {
-    width: 40vw;
-    z-index: 120;
-    /* border: 2.0px solid rgba(255, 255, 255, 0.5); */
-  
-  }
-
-  .butt:active {
-    background-color: rgba(255, 255, 255, 0.2);
-    color: rgba(255, 255, 255, 0.8);
-  }
-
-
-  .circle {
-    width: 60px;
-    height: 60px;
-    background-color: rgba(255, 255, 255, 0.0);
-    border-radius: 50%; /* Makes it a circle */
-    position: absolute;
-    /* transform: translate(-50%, -50%); */
-    cursor: pointer; /* Shows it's clickable */
-    pointer-events: all;
-    z-index: 200;
-    font-size: 0.7em;
-    text-align: center;
-    /* Align text vertically */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: rgba(255, 255, 255, 0.5);
-
-  }
-
-  .circle_tl {
-    left: 10%;
-    top: 10%;
-  }
-  .circle_tr {
-    right: 10%;
-    top: 10%;
-  }
-  .circle_bl {
-    left: 10%;
-    bottom: 10%;
-  }
-  .circle_br {
-    right: 10%;
-    bottom: 10%;
-  }
-
-
-  .ui-canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 1;
-  }
-
-  #lighthouse_canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: -10;
-    /* border: 1px solid #888; */
-    border-radius: 16px;
-    transform: translateY(-0%) scale(1.0);
-    /* transition: transform 1s ease-in-out; */
-    transition: transform 0.5s ease-in-out, border-color 0.5s ease-in-out;
-  }
-
-
-
-  </style>
-  <script type="module" crossorigin src="/assets/index-CMwVZNn0.js"></script>
+  <title>THK SYNC</title>
+  <script type="module" crossorigin src="/assets/index-C6FyeVLh.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-CThGI-pc.css">
 </head>
 <body>
-  <div>
-
+  <main>
 
     <div class="container">
       <div class="container-flex">
         <div class="header">
           <div class="header-sub align-left" id="i_topleft">8°37'58.5"S</div>
-          <div class="header-title"><div class="header-title">THK CREATOR</div></div>
+          <div class="header-title"><div class="header-title">THK SYNC</div></div>
           <div class="header-sub align-right" id="i_topright">115°05'50.5"E</div>
         </div>
         <div class="content">
           <!-- <div class="circle circle_tl" id="c1">N/A</div>
           <div class="circle circle_tr" id="c2">MOTION</div> -->
-          <div class="circle circle_bl" id="c3">COLOR</div>
-          <div class="circle circle_br" id="c4">SHAPE</div>
+          <div class="circle circle_bl" id="c3"></div>
+          <div class="circle circle_br" id="c4"></div>
         </div>
         <div class="footer">
           <div class="butt-div align-left"><button class="butt" id="info">
@@ -289,19 +38,23 @@
         </div>
       </div>
     </div>
-
-    <span id="centeredText">Entity sent to THK tower</span>
-    <canvas id="ui_canvas" class="ui-canvas"></canvas>
-    <canvas id="lighthouse_canvas"></canvas>
-
     
-  </div>
+    <span id="centeredText">Entity sent to THK tower</span>
+    <div class="onboarding" id="onboarding">
+      <div class="onboarding-content" id="onboarding_content">
+        <h1 id="onboarding_header"></h1>
+        <p id="onboarding_text"></p>
+      </div>
+      <button id="onboarding_button" class="butt">NEXT</button>
+    </div>
+    <canvas id="ui_canvas" class="ui-canvas"></canvas>
+    <div class="fade"></div>
+    <canvas id="thk_canvas" class="thk-canvas"></canvas>
+    
+  </main>
 
   <script src="twgl.min.js"></script>
-  <script src="thk.js"></script>
-
-
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
 
 
 </body>
