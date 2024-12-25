@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>    
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>THK SYNC</title>
+  <script type="module" crossorigin src="/assets/index-DJedGxdq.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-RcvR3Vc2.css">
+</head>
+
+<body>
+
+  <main>
+
+    <div class="webui">
+      
+      <div class="text-header" id="text-header">THK TOWER</div>
+      <div class="text-info" id="text-info">LOCATION: UNDEFINED</div>
+      
+      <div class="slider" id="slider-color"></div>
+      <div class="slider" id="slider-shape"></div>
+
+      <button class="butt" id="butt-info">
+        <svg class="butt-icon" style="transform: translateY(0px) scale(1.0);" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="white"><path d="M440-280h80v-240h-80v240Zm40-320q17 0 28.5-11.5T520-640q0-17-11.5-28.5T480-680q-17 0-28.5 11.5T440-640q0 17 11.5 28.5T480-600Zm0 520q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/></svg>
+        <span class="butt-tooltip">T&nbsp;U&nbsp;T&nbsp;O&nbsp;R&nbsp;I&nbsp;A&nbsp;L</span>
+      </button>
+
+      <button class="butt" id="butt-save">
+        <svg class="butt-icon" style="transform: translateY(0px) scale(1.15);" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="white"><path d="M480-320 280-520l56-58 104 104v-326h80v326l104-104 56 58-200 200ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z"/></svg>
+        <span class="butt-tooltip">D&nbsp;O&nbsp;W&nbsp;N&nbsp;L&nbsp;O&nbsp;A&nbsp;D</span>
+
+      </button>
+
+      <button class="butt" id="butt-sync">S&nbsp;&nbsp;Y&nbsp;&nbsp;N&nbsp;&nbsp;C</button>
+
+    </div>
+    
+    <div class="webui" id="webui-onb">
+      
+      <div class="textbox" id="textbox-onb">
+        <h1 id="onb-header"></h1>
+        <p id="onb-body"></p>
+      </div>
+
+      <img src="data:image/svg+xml,%3csvg%20width='66'%20height='148'%20viewBox='0%200%2066%20148'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20fill-rule='evenodd'%20clip-rule='evenodd'%20d='M32.9985%2082.7939C34.1031%2082.7939%2034.9985%2083.6894%2034.9985%2084.7939V141.414L62.0819%20118.991C62.9327%20118.287%2064.1935%20118.406%2064.8979%20119.257C65.6023%20120.107%2065.4836%20121.368%2064.6327%20122.073L34.2739%20147.207C33.534%20147.819%2032.463%20147.819%2031.7231%20147.207L1.36428%20122.073C0.513457%20121.368%200.394754%20120.107%201.09915%20119.257C1.80355%20118.406%203.0643%20118.287%203.91512%20118.991L30.9985%20141.414V84.7939C30.9985%2083.6894%2031.8939%2082.7939%2032.9985%2082.7939Z'%20fill='white'/%3e%3cpath%20fill-rule='evenodd'%20clip-rule='evenodd'%20d='M33.0005%20102.809C31.896%20102.809%2031.0005%20101.913%2031.0005%20100.809L31.0005%207.20513L3.91714%2029.6274C3.06632%2030.3318%201.80556%2030.2131%201.10117%2029.3623C0.396771%2028.5115%200.515477%2027.2507%201.3663%2026.5463L31.7251%201.41231C32.465%200.799711%2033.536%200.799711%2034.276%201.41231L64.6348%2026.5463C65.4856%2027.2507%2065.6043%2028.5115%2064.8999%2029.3623C64.1955%2030.2131%2062.9347%2030.3318%2062.0839%2029.6274L35.0005%207.20514L35.0005%20100.809C35.0005%20101.913%2034.1051%20102.809%2033.0005%20102.809Z'%20fill='white'/%3e%3c/svg%3e" alt="arrow" id="onb-arrow"></img>
+
+      <button id="onb-butt" class="butt">N E X T</button>
+
+    </div>
+
+
+    <div class="webui" id="webui-sync">
+      
+      <div class="sync-content" id="sync_content">
+        <p id="timer_text"></p>
+      </div>
+
+      <button class="butt" id="butt-continue">
+        <svg class="butt-icon" style="transform: translateY(0px) scale(1.0);" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="white"><path d="M647-440H160v-80h487L423-744l57-56 320 320-320 320-57-56 224-224Z"/></svg>
+      </button>
+
+      <button class="butt" id="butt-download">
+        <svg class="butt-icon" style="transform: translateY(0px) scale(1.2);" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="white"><path d="M480-320 280-520l56-58 104 104v-326h80v326l104-104 56 58-200 200ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z"/></svg>
+      </button>
+
+    </div>
+
+    <div class="webui">
+      <canvas id="canvas-ui"></canvas>
+      <div class="fade" id="onb-fade"></div>
+      <canvas id="canvas-thk"></canvas>
+    </div>
+    
+  </main>
+
+  <script src="./src/twgl.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
+
+
+</body>
+</html>
