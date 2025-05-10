@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>    
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Rêveries</title>
+        <style>
+            html, body {
+                margin: 0;
+                padding: 0;
+                height: 100%;
+                overflow: hidden;
+            }
+            body {
+                background-color: black;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            canvas {
+                max-width: 100%;
+                height: auto;
+                margin: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <canvas id="canvas" width="1024" height="1024"></canvas>
+        <script src="twgl.min.js"></script>
+        <script src="shaders.js"></script>
+        <script src="main.js"></script>
+    </body>
+</html>
