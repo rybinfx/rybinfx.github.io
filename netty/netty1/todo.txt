@@ -1,0 +1,31 @@
+HTML
+- Webgl Canvas
+- Input Image
+- Input Depth
+- Update Loop
+
+Pipeline
+- Input Image -> Source TEX
+- Input Depth -> Depth TEX
+- Source TEX -> Image FBO
+- Image FBO -> ImageBlur FBO
+- ImageBlur FBO | Depth TEX -> DisplaceMap FBO
+- Image FBO | Depth TEX -> MaskMap FBO
+- Image FBO | DisplaceMap FBO -> Displace FBO
+- Displace FBO | Source TEX | MaskMap FBO -> Mask FBO
+- Mask FBO -> Image FBO
+
+Framebuffers
+- Source TEX
+- Depth TEX
+- Image FBO
+- ImageBlur FBO
+- DisplaceMap FBO
+- MaskMap FBO
+- Mask FBO
+
+Shaders
+- Blit
+- Blur
+- DisplaceMap
+- MaskMap
