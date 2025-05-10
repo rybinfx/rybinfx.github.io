@@ -19,9 +19,11 @@
                 align-items: center;
             }
             canvas {
-                max-width: 100%;
+                max-width: calc(100% - 40px);
+                max-height: calc(100% - 40px);
+                width: auto;
                 height: auto;
-                margin: 20px;
+                object-fit: contain;
             }
         </style>
     </head>
